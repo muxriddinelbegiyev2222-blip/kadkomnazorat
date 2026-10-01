@@ -1,0 +1,31 @@
+name: Build KompNazorat Desktop App
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Repozitoriyni yuklash
+        uses: actions/checkout@v4
+
+      - name: Node.js o‘rnatish
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Paketlarni o‘rnatish (Dependencies)
+        run: npm install
+
+      - name: Electron dasturini .exe formatida yig‘ish (Build)
+        run: npm run build
+
+      - name: Tayyor .exe o‘rnatuvchi faylni yuklab olish uchun saqlash (Artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: KompNazorat-2.1-Windows-Setup
+          path: dist/*.exe
