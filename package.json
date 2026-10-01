@@ -1,0 +1,31 @@
+{
+  "name": "komplayens-portal",
+  "version": "2.1.0",
+  "description": "KompNazorat 2.1 — Davlat Kadastrlari Tizimi Komplayens Portali",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win"
+  },
+  "author": "Muxriddin",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^28.2.0",
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "uz.kadastr.kompnazorat",
+    "productName": "KompNazorat 2.1",
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": false
+    },
+    "files": [
+      "**/*"
+    ]
+  }
+}
