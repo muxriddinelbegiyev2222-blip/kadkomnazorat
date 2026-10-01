@@ -150,36 +150,55 @@
           </div>
 
           <!-- Аналитическая панель земельных и финансовых ресурсов -->
-          <div class="financial-audit-bar">
-            <div class="fin-stat-item">
-              <span class="fin-icon">&#127757;</span>
-              <div>
-                <p class="fin-label">Noqonuniy o'zlashtirishdan saqlangan yerlar</p>
-                <h4 class="fin-val text-emerald">142.5 gektar</h4>
-              </div>
-            </div>
-            <div class="fin-stat-item">
-              <span class="fin-icon">&#128176;</span>
-              <div>
-                <p class="fin-label">Davlatga undirilgan / Qoplangan zarar</p>
-                <h4 class="fin-val text-blue">2.4 mlrd so'm</h4>
-              </div>
-            </div>
-            <div class="fin-stat-item">
-              <span class="fin-icon">&#9888;</span>
-              <div>
-                <p class="fin-label">Jarayonda undirilayotgan moddiy da'vo</p>
-                <h4 class="fin-val text-amber">850 mln so'm</h4>
-              </div>
-            </div>
-            <div class="fin-stat-item">
-              <span class="fin-icon">&#128737;</span>
-              <div>
-                <p class="fin-label">Bloklangan soxta kadastr pasportlari</p>
-                <h4 class="fin-val text-rose">89 ta mulk</h4>
-              </div>
-            </div>
+        function renderDashboardChart(mode) {
+  const container = document.getElementById('chartBarsContainer');
+  if (!container) return;
+
+  let points = [];
+  if (mode === 'week') {
+    points = [
+      { l: 'Dush', v: 3, c: '#0284c7' },
+      { l: 'Sesh', v: 7, c: '#be123c' },
+      { l: 'Chor', v: 4, c: '#0284c7' },
+      { l: 'Pay', v: 8, c: '#be123c' },
+      { l: 'Jum', v: 5, c: '#047857' },
+      { l: 'Shan', v: 2, c: '#047857' }
+    ];
+  } else if (mode === 'year') {
+    points = [
+      { l: '2023', v: 42, c: '#0284c7' },
+      { l: '2024', v: 58, c: '#0284c7' },
+      { l: '2025', v: 74, c: '#be123c' },
+      { l: '2026', v: 61, c: '#047857' }
+    ];
+  } else {
+    points = [
+      { l: 'Apr', v: 12, c: '#047857' },
+      { l: 'May', v: 19, c: '#0284c7' },
+      { l: 'Iyun', v: 14, c: '#047857' },
+      { l: 'Iyul', v: 28, c: '#be123c' },
+      { l: 'Avg', v: 16, c: '#047857' },
+      { l: 'Sen', v: 22, c: '#be123c' }
+    ];
+  }
+
+  const maxVal = Math.max(...points.map(p => p.v));
+
+  container.innerHTML = `
+    <div style="display: flex; align-items: flex-end; justify-content: space-around; width: 100%; height: 110px; padding: 10px 0; border-bottom: 2px solid var(--border-color);">
+      ${points.map(p => {
+        const heightPercent = Math.round((p.v / maxVal) * 80) + 10;
+        return `
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; width: 36px;">
+            <span style="font-size: 11px; font-weight: 800; color: ${p.c};">${p.v} ta</span>
+            <div style="width: 100%; height: ${heightPercent}px; background:${p.c}; border-radius: 4px 4px 0 0; transition: height 0.3s ease;"></div>
+            <span style="font-size: 10px; font-weight: 700; color: var(--text-muted);">${p.l}</span>
           </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
 
           <!-- Динамика и структура нарушений -->
           <div class="grid-dashboard-charts">
